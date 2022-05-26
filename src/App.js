@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Loader from './components/Loader'
 
-function App() {
+const Home = lazy(() => import('./pages/Home'))
+const Login = lazy(() => import('./pages/Login'))
+const Profile = lazy(() => import('./pages/Profile'))
+const Redeem = lazy(() => import('./pages/Redeem'))
+const Register = lazy(() => import('./pages/Register'))
+const Settings = lazy(() => import('./pages/Settings'))
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/settings' element={<Settings />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/redeem' element={<Redeem />} />
+        </Routes>
+      </Suspense>
+    </>
+  )
 }
 
-export default App;
+export default App
